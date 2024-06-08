@@ -2,9 +2,9 @@ import Tickets from "../models/tickets.model.js";
 
 export const getTickets = async (req, res) => {
 	try {
-		const { movie_id } = req.query;
+		const { event_id } = req.query;
 
-		let tickets = await Tickets.find({ movie_id });
+		let tickets = await Tickets.find({ event_id });
 		res.status(200).json(tickets);
 	} catch (error) {
 		console.log("error in get tickets controller :", error.message);
@@ -14,11 +14,11 @@ export const getTickets = async (req, res) => {
 export const buyTicket = async (req, res) => {
 	try {
 		const { seats } = req.body;
-		const { movie_id, user_id } = req.query;
+		const { event_id, user_id } = req.query;
 		const tickets = [];
 		for (let i = 0; i < seats.length; i++) {
 			var currTicket = await Tickets.create({
-				movie_id,
+				event_id,
 				user_id,
 				number: seats[i],
 				status: true,

@@ -6,7 +6,7 @@ const ticketSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "User",
 		},
-		movie_id: {
+		event_id: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Movies",
 		},

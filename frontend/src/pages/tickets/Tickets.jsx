@@ -29,18 +29,19 @@ export default function Tickets() {
 			: pageType === "Co"
 			? "Concert"
 			: "";
+
 	const [selectedRecord, setSelectedRecord] = useState(null);
 	const handleAdd = async () => {
 		setCondition("create");
 		setSelectedRecord({
 			name: "",
+			description: "",
 			release_date: "",
-			rating: null,
-			available_tickets: null,
 			logo: "",
+			description: "",
 			type:
 				ticketsType === "Theater"
-					? "Movie"
+					? "Theater"
 					: ticketsType === "Cinema"
 					? "Cinema"
 					: ticketsType === "Concert"
@@ -57,9 +58,8 @@ export default function Tickets() {
 		setShowModal(true);
 	};
 	const handleDelete = async (item) => {
-		console.log({ item });
 		try {
-			const res = await fetch(`http://localhost:5000/api/movies/${item?._id}`, {
+			const res = await fetch(`http://localhost:5000/api/events/${item?._id}`, {
 				method: "DELETE",
 			});
 			if (!res.ok) throw new Error("Failed to delete !");
@@ -79,7 +79,7 @@ export default function Tickets() {
 		const fetchMovies = async () => {
 			try {
 				const res = await fetch(
-					`http://localhost:5000/api/movies?filter=${ticketsType}`,
+					`http://localhost:5000/api/events?filter=${ticketsType}`,
 					{
 						method: "GET",
 					}
@@ -97,7 +97,6 @@ export default function Tickets() {
 		};
 		fetchMovies();
 	}, []);
-
 	if (error) return <div>Something went wrong !</div>;
 	if (loading)
 		return (
@@ -157,21 +156,23 @@ export default function Tickets() {
 							<div className='flex-1 flex items-start justify-center mx-5 flex-col '>
 								<p className='font-semibold text-[2rem]'>{item?.name} </p>
 								<p className='font-normal'>Released : {item?.release_date}</p>
-								<p className='font-normal'>Rating : {item?.rating}</p>
-								<p className='font-normal'>
-									Available Tickets : {item?.available_tickets}
-								</p>
+								<p className='font-normal'>Descruption : {item?.description}</p>
 							</div>
 							<div
 								onClick={() => handleOrder(item?._id)}
 								className='flex-[0.5] flex flex-col items-start justify-center gap-5 h-full'>
 								<div className='bg-green-500 rounded-lg font-semibold mx-auto h-[70px] opacity-0 group-hover:opacity-100 w-[45%] min-w-32 flex items-center justify-center transition-all duration-300 active:scale-95'>
-									Order Now!
+									Book Now!
 								</div>
 							</div>
 						</div>
 					</div>
 				))}
+			{localData?.length < 1 && (
+				<div className='w-full flex items-center justify-center text-4xl text-red-400 '>
+					No records Were Found !
+				</div>
+			)}
 			{showModal && (
 				<Modal
 					setShowModal={setShowModal}

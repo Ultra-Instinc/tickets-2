@@ -40,21 +40,19 @@ export default function Home() {
 				damping: 40,
 				stiffness: 700,
 			}}
-			className='flex items-center justify-center h-[calc(100vh_-_300px)]'>
+			className='flex items-center justify-center pt-32'>
 			<div className='grid grid-cols-4 gap-4'>
 				{arr.map((item) => (
 					<div
 						key={item.key}
 						onClick={() => navigate(item.path)}
-						className='flex flex-col h-[250px] w-[200px] col-span-2 rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 items-center justify-center border-gray-500 border hover:scale-105 duration-300 transition-all cursor-pointer'>
+						className='flex flex-col h-[230px] w-[200px] col-span-2 rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 items-center justify-center border-gray-500 border hover:scale-105 duration-300 transition-all cursor-pointer'>
 						<div className='text-[#ba9180] mb-5'>{item.icon}</div>
 						<h1 className='text-4xl'>{item.title}</h1>
 						<p>Tickets</p>
 					</div>
 				))}
 			</div>
-			{/* <SideBar /> */}
-			{/* <MessageContainer /> */}
 		</motion.div>
 	);
 }

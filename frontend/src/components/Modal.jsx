@@ -15,22 +15,22 @@ export default function Modal({
 	const [loading, setLoading] = useState(false);
 	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [movieOcupiedSeats, setMovieOccupiedSeats] = useState([]);
+	console.log({ selectedRecord });
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (condition === "edit") {
 			try {
 				setLoading(true);
 				const res = await fetch(
-					`http://localhost:5000/api/movies/${selectedRecord?._id}`,
+					`http://localhost:5000/api/events/${selectedRecord?._id}`,
 					{
 						method: "PUT",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							name: selectedRecord?.name,
 							release_date: selectedRecord?.release_date,
-							rating: selectedRecord?.rating,
+							description: selectedRecord?.description,
 							logo: selectedRecord?.logo,
-							available_tickets: selectedRecord?.available_tickets,
 						}),
 					}
 				);
@@ -53,14 +53,16 @@ export default function Modal({
 		if (condition === "create") {
 			try {
 				setLoading(true);
-				const res = await fetch("http://localhost:5000/api/movies", {
+				const res = await fetch("http://localhost:5000/api/events", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(selectedRecord),
 				});
 				if (!res.ok) throw new Error("Failed to create ");
+				const data = await res.json();
+				console.log({ data });
 				let arr = [];
-				arr.push(selectedRecord);
+				arr.push(data);
 				setFullData([...arr, ...fullData]);
 				toast.success("Record Created !");
 			} catch (error) {
@@ -74,7 +76,7 @@ export default function Modal({
 			try {
 				setLoading(true);
 				const res = await fetch(
-					`http://localhost:5000/api/tickets?movie_id=${fetchValue}&user_id=${authUser?._id}`,
+					`http://localhost:5000/api/tickets?event_id=${fetchValue}&user_id=${authUser?._id}`,
 					{
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
@@ -97,7 +99,7 @@ export default function Modal({
 		const fetchTickets = async () => {
 			try {
 				const res = await fetch(
-					`http://localhost:5000/api/tickets?movie_id=${fetchValue}`
+					`http://localhost:5000/api/tickets?event_id=${fetchValue}`
 				);
 				if (!res.ok) throw new Error("failed to place order !");
 				const data = await res.json();
@@ -156,38 +158,6 @@ export default function Modal({
 						/>
 					</div>
 					<div className='w-full'>
-						<label className='pl-2 text-zinc-400 font-semibold'>Rating</label>
-						<input
-							type='text'
-							placeholder='Rating...'
-							className='w-full h-10 px-2'
-							value={selectedRecord?.rating || ""}
-							onChange={(e) => {
-								setSelectedRecord((prev) => ({
-									...prev,
-									rating: e.target.value,
-								}));
-							}}
-						/>
-					</div>
-					<div className='w-full'>
-						<label className='pl-2 text-zinc-400 font-semibold'>
-							Available Tickets
-						</label>
-						<input
-							type='text'
-							placeholder='Available Tickets...'
-							className='w-full h-10 px-2'
-							value={selectedRecord?.available_tickets || ""}
-							onChange={(e) => {
-								setSelectedRecord((prev) => ({
-									...prev,
-									available_tickets: e.target.value,
-								}));
-							}}
-						/>
-					</div>
-					<div className='w-full'>
 						<label className='pl-2 text-zinc-400 font-semibold'>Image</label>
 						<input
 							type='text'
@@ -201,6 +171,24 @@ export default function Modal({
 								}));
 							}}
 						/>
+					</div>
+					<div className='w-full'>
+						<label className='pl-2 text-zinc-400 font-semibold'>
+							Description
+						</label>
+						<textarea
+							name=''
+							id=''
+							cols='30'
+							rows='10'
+							className='w-full h-auto px-2'
+							value={selectedRecord?.description || ""}
+							onChange={(e) => {
+								setSelectedRecord((prev) => ({
+									...prev,
+									description: e.target.value,
+								}));
+							}}></textarea>
 					</div>
 					<div className='flex items-center justify-end h-10 w-full gap-5 '>
 						<button

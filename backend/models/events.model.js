@@ -1,18 +1,10 @@
 import mongoose from "mongoose";
-const moviesSchema = new mongoose.Schema(
+const eventsSchema = new mongoose.Schema(
 	{
 		name: {
 			type: String,
 			required: true,
 			unique: true,
-		},
-		rating: {
-			type: Number,
-			required: true,
-		},
-		available_tickets: {
-			type: Number,
-			required: true,
 		},
 		release_date: {
 			type: String,
@@ -21,9 +13,13 @@ const moviesSchema = new mongoose.Schema(
 		type: {
 			type: String,
 			required: true,
-			enum: ["Movie", "Play", "Cinema", "Concert"],
+			enum: ["Theater", "Play", "Cinema", "Concert"],
 		},
 		logo: {
+			type: String,
+			required: true,
+		},
+		description: {
 			type: String,
 			required: true,
 		},
@@ -31,5 +27,5 @@ const moviesSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-const Movies = mongoose.model("Movie", moviesSchema);
-export default Movies;
+const Events = mongoose.model("Movie", eventsSchema);
+export default Events;
