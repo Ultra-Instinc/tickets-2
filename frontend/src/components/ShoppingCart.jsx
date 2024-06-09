@@ -65,12 +65,14 @@ export default function ShoppingCart() {
 						/>
 					))}
 			</div>
-			<div className='w-full h-20 flex items-center justify-end gap-5 pr-5'>
-				<div> Total : {localData?.length * 250} EGP</div>
-				<button className='h-16 w-32 bg-green-500 text-white font-semibold rounded-lg'>
-					Checkout!
-				</button>
-			</div>
+			{localData?.length > 0 && (
+				<div className='w-full h-20 flex items-center justify-end gap-5 pr-5'>
+					<div> Total : {localData?.length * 250} EGP</div>
+					<button className='h-16 w-32 bg-green-500 text-white font-semibold rounded-lg'>
+						Checkout!
+					</button>
+				</div>
+			)}
 		</motion.div>
 	);
 }

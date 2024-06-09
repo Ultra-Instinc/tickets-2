@@ -38,7 +38,6 @@ export default function Tickets() {
 			description: "",
 			release_date: "",
 			logo: "",
-			description: "",
 			type:
 				ticketsType === "Theater"
 					? "Theater"
