@@ -156,7 +156,9 @@ export default function Tickets() {
 							<div className='flex-1 flex items-start justify-center mx-5 flex-col '>
 								<p className='font-semibold text-[2rem]'>{item?.name} </p>
 								<p className='font-normal'>Released : {item?.release_date}</p>
-								<p className='font-normal'>Descruption : {item?.description}</p>
+								<p className='font-normal line-clamp-2 group-hover:line-clamp-none transition-all duration-300 delay-200 '>
+									Descruption : {item?.description}
+								</p>
 							</div>
 							<div
 								onClick={() => handleOrder(item?._id)}

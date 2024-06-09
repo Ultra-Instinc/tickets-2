@@ -11,6 +11,16 @@ export const getEvents = async (req, res) => {
 		res.status(500).json({ error: "Internal server error !" });
 	}
 };
+export const getSingleEvent = async (req, res) => {
+	try {
+		const { id } = req.params;
+		let event = await Events.findById(id);
+		res.status(200).json(event);
+	} catch (error) {
+		console.log("error in get events controller :", error.message);
+		res.status(500).json({ error: "Internal server error !" });
+	}
+};
 export const addEvent = async (req, res) => {
 	try {
 		const { name, release_date, description, logo, type, show_date } = req.body;
