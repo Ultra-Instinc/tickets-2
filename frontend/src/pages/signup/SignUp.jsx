@@ -37,55 +37,55 @@ export default function SignUp() {
 			</h1>
 			<form
 				onSubmit={handleSubmit}
-				className='w-full'>
+				className='w-full text-white'>
 				<div className='w-full'>
 					<label className='label p-2'>
-						<span className='text-base label-text'>FullName</span>
+						<span className='text-base'>FullName</span>
 					</label>
 					<input
 						type='text'
 						placeholder='Enter FullName'
 						name='fullName'
-						className='w-full input input-bordered h-10'
+						className='w-full input text-gray-100 input-bordered h-10'
 						value={inputs.fullName}
 						onChange={handleChange}
 					/>
 				</div>
 				<div className='w-full'>
-					<label className='label p-2'>
-						<span className='text-base label-text'>UserName</span>
+					<label className='label p-2 text-gray-300'>
+						<span className='text-base'>UserName</span>
 					</label>
 					<input
 						type='text'
 						placeholder='Enter UserName'
-						className='w-full input input-bordered h-10'
+						className='w-full input text-gray-100 input-bordered h-10'
 						name='username'
 						value={inputs.username}
 						onChange={handleChange}
 					/>
 				</div>
 				<div className='w-full'>
-					<label className='label p-2'>
-						<span className='text-base label-text'>Password</span>
+					<label className='label p-2 text-gray-300'>
+						<span className='text-base  '>Password</span>
 					</label>
 					<input
 						type='password'
 						placeholder='Enter Password'
 						name='password'
-						className='w-full input input-bordered h-10'
+						className='w-full input text-gray-100 input-bordered h-10'
 						value={inputs.password}
 						onChange={handleChange}
 					/>
 				</div>
 				<div className='w-full'>
-					<label className='label p-2'>
-						<span className='text-base label-text'>Confirm Password</span>
+					<label className='label p-2 text-gray-300'>
+						<span className='text-base  '>Confirm Password</span>
 					</label>
 					<input
 						type='password'
 						placeholder='Confirm Password'
 						name='confirmPassword'
-						className='w-full input input-bordered h-10'
+						className='w-full input text-gray-100 input-bordered h-10'
 						value={inputs.confirmPassword}
 						onChange={handleChange}
 					/>

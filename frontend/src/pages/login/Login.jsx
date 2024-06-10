@@ -22,7 +22,7 @@ export default function Login() {
 				stiffness: 700,
 				damping: 30,
 			}}
-			className='backdrop-filter backdrop-blur-md bg-clip-padding p-6 bg-opacity-10 w-full flex items-center justify-center rounded-lg max-w-96 mx-auto flex-col '>
+			className='backdrop-filter backdrop-blur-md bg-clip-padding p-6 bg-opacity-10 w-full flex items-center justify-center rounded-lg max-w-96 mx-auto flex-col text-white'>
 			<div className='w-full p-6 '>
 				<h1 className='text-3xl font-semibold text-center text-gray-300'>
 					Login
@@ -33,12 +33,12 @@ export default function Login() {
 						<label
 							htmlFor=''
 							className='label p-2'>
-							<span className='text-base label-text'>Username</span>
+							<span className='text-base'>Username</span>
 						</label>
 						<input
 							type='text'
 							placeholder='Enter Username'
-							className='w-full input input-bordered h-10'
+							className='w-full input text-gray-100 input-bordered h-10'
 							value={username}
 							onChange={(e) => setUserName(e.target.value)}
 						/>
@@ -47,12 +47,12 @@ export default function Login() {
 						<label
 							htmlFor=''
 							className='label p-2'>
-							<span className='text-base label-text'>Password</span>
+							<span className='text-base'>Password</span>
 						</label>
 						<input
 							type='password'
 							placeholder='Enter Password'
-							className='w-full input input-bordered h-10'
+							className='w-full input text-gray-100 input-bordered h-10'
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>

@@ -46,7 +46,7 @@ export default function Home() {
 					<div
 						key={item.key}
 						onClick={() => navigate(item.path)}
-						className='flex flex-col h-[230px] w-[200px] col-span-2 rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 items-center justify-center border-gray-500 border hover:scale-105 duration-300 transition-all cursor-pointer'>
+						className=' flex flex-col h-[230px] w-[200px] col-span-2 rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 items-center justify-center border-gray-500 border hover:scale-105 duration-300 transition-all cursor-pointer'>
 						<div className='text-[#ba9180] mb-5'>{item.icon}</div>
 						<h1 className='text-4xl'>{item.title}</h1>
 						<p>Tickets</p>

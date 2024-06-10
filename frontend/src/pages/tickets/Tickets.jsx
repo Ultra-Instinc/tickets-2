@@ -29,7 +29,6 @@ export default function Tickets() {
 			: pageType === "Co"
 			? "Concert"
 			: "";
-
 	const [selectedRecord, setSelectedRecord] = useState(null);
 	const handleAdd = async () => {
 		setCondition("create");
@@ -122,53 +121,56 @@ export default function Tickets() {
 					</button>
 				</div>
 			)}
-			{localData?.length > 0 &&
-				localData?.map((item, ix) => (
-					<div
-						key={ix}
-						className='w-[90%] h-32 hover:h-64 flex rounded-xl group overflow-hidden cursor-pointer hover:opacity-95 transition-all duration-500 relative'>
-						{authUser?.username === "admin" && (
-							<>
-								<span
-									title='edit'
-									onClick={() => handleEdit(item)}
-									className='absolute h-6 w-6 rounded-lg flex items-center justify-center top-2 right-8 text-blue-400 opacity-0 group-hover:opacity-100 delay-100 hover:opacity-90'>
-									<FaEdit size={17} />
-								</span>
-								<span
-									title='delete'
-									onClick={() => handleDelete(item)}
-									className='absolute h-6 w-6 rounded-lg flex items-center justify-center top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100 delay-100 hover:opacity-90'>
-									<GiCancel />
-								</span>
-							</>
-						)}
-						<div className='flex-[0.2] transition-all duration-300 '>
-							<img
-								src={item?.logo}
-								defaultValue={""}
-								alt='logo'
-								className='object-cover h-full w-full'
-							/>
-						</div>
-						<div className='flex-[0.8] flex gap-5 bg-gray-900/60 text-white'>
-							<div className='flex-1 flex items-start justify-center mx-5 flex-col '>
-								<p className='font-semibold text-[2rem]'>{item?.name} </p>
-								<p className='font-normal'>Released : {item?.release_date}</p>
-								<p className='font-normal line-clamp-2 group-hover:line-clamp-none transition-all duration-300 delay-200 '>
-									Descruption : {item?.description}
-								</p>
+			<div className='h-full overflow-auto'>
+				{localData?.length > 0 &&
+					localData?.map((item, ix) => (
+						<div
+							key={ix}
+							className='w-[90%] h-32 hover:h-64 flex rounded-xl group overflow-hidden cursor-pointer hover:opacity-95 transition-all duration-500 relative my-2'>
+							{authUser?.username === "admin" && (
+								<>
+									<span
+										title='edit'
+										onClick={() => handleEdit(item)}
+										className='absolute h-6 w-6 rounded-lg flex items-center justify-center top-2 right-8 text-blue-400 opacity-0 group-hover:opacity-100 delay-100 hover:opacity-90'>
+										<FaEdit size={17} />
+									</span>
+									<span
+										title='delete'
+										onClick={() => handleDelete(item)}
+										className='absolute h-6 w-6 rounded-lg flex items-center justify-center top-2 right-2 text-red-400 opacity-0 group-hover:opacity-100 delay-100 hover:opacity-90'>
+										<GiCancel />
+									</span>
+								</>
+							)}
+							<div className='flex-[0.2] transition-all duration-300 '>
+								<img
+									src={item?.logo}
+									defaultValue={""}
+									alt='logo'
+									className='object-cover h-full w-full'
+								/>
 							</div>
-							<div
-								onClick={() => handleOrder(item?._id)}
-								className='flex-[0.5] flex flex-col items-start justify-center gap-5 h-full'>
-								<div className='bg-green-500 rounded-lg font-semibold mx-auto h-[70px] opacity-0 group-hover:opacity-100 w-[45%] min-w-32 flex items-center justify-center transition-all duration-300 active:scale-95'>
-									Book Now!
+							<div className='flex-[0.8] flex gap-5 bg-gray-900/60 text-white'>
+								<div className='flex-1 flex items-start justify-center mx-5 flex-col '>
+									<p className='font-semibold text-[2rem]'>{item?.name} </p>
+									<p className='font-normal'>Released : {item?.release_date}</p>
+									<p className='font-normal line-clamp-2 group-hover:line-clamp-none transition-all duration-300 delay-200 '>
+										Description : {item?.description}
+									</p>
+								</div>
+								<div
+									onClick={() => handleOrder(item?._id)}
+									className='flex-[0.5] flex flex-col items-start justify-center gap-5 h-full'>
+									<div className='bg-green-500 rounded-lg font-semibold mx-auto h-[70px] opacity-0 group-hover:opacity-100 w-[45%] min-w-32 flex items-center justify-center transition-all duration-300 active:scale-95'>
+										Book Now!
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				))}
+					))}
+			</div>
+
 			{localData?.length < 1 && (
 				<div className='w-full flex items-center justify-center text-4xl text-red-400 '>
 					No records Were Found !

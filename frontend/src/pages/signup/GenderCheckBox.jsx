@@ -5,7 +5,7 @@ export default function GenderCheckBox({ inputs, setInputs }) {
 		<div className='flex items-start h-10'>
 			<div className='flex h-full items-center gap-2'>
 				<label className='label gap-2 cursor-pointer'></label>
-				<span className='label-text'>Male</span>
+				<span className=' '>Male</span>
 				<input
 					type='checkbox'
 					className='checkbox border-slate-900'
@@ -15,7 +15,7 @@ export default function GenderCheckBox({ inputs, setInputs }) {
 			</div>
 			<div className='flex h-full items-center gap-2'>
 				<label className='label gap-2 cursor-pointer'></label>
-				<span className='label-text'>Female</span>
+				<span className=' '>Female</span>
 				<input
 					type='checkbox'
 					className='checkbox border-slate-900'
