@@ -26,6 +26,5 @@ const eventsSchema = new mongoose.Schema(
 	},
 	{ timestamps: true }
 );
-
 const Events = mongoose.model("Movie", eventsSchema);
 export default Events;
