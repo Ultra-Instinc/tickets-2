@@ -7,6 +7,7 @@ import cors from "cors";
 import AuthRoutes from "./routes/auth.routes.js";
 import eventsRoute from "./routes/events.routes.js";
 import ticketsRoute from "./routes/tickets.routes.js";
+import transactionsRoute from "./routes/transaction.route.js";
 
 import connectToMongoDB from "./db/connetToMongoDB.js";
 
@@ -22,6 +23,7 @@ app.use(cookieParser()); // to access cookies => (authenticating users)
 app.use("/api/auth", AuthRoutes);
 app.use("/api/events", eventsRoute);
 app.use("/api/tickets", ticketsRoute);
+app.use("/api/transactions", transactionsRoute);
 
 app.listen(port, () => {
 	connectToMongoDB();

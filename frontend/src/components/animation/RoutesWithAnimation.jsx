@@ -9,6 +9,7 @@ import Tickets from "../../pages/tickets/Tickets";
 import NavBar from "../navbar/NavBar";
 import Footer from "./../Footer";
 import ShoppingCart from "../ShoppingCart";
+import Transactions from "../Transactions";
 
 export default function RoutesWithAnimation() {
 	const { authUser } = useAuthContext();
@@ -40,6 +41,10 @@ export default function RoutesWithAnimation() {
 						<Route
 							path='/cart'
 							element={authUser ? <ShoppingCart /> : <Login />}
+						/>
+						<Route
+							path='/transactions'
+							element={authUser ? <Transactions /> : <Login />}
 						/>
 					</Routes>
 				</div>

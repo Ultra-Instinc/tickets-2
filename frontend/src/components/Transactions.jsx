@@ -2,23 +2,19 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuthContext } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
-import CartItem from "./CartItem";
-import Modal from "./Modal";
 
 export default function ShoppingCart() {
 	const [localData, setLocalData] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [refetch, setRefetch] = useState(false);
 	const { authUser } = useAuthContext();
-	const [showCheckOutModal, setShowCheckOutModal] = useState(false);
 	useEffect(() => {
-		const fetchUserTickets = async () => {
+		const fetchUserTransactions = async () => {
 			try {
 				setLoading(true);
 				const res = await fetch(
-					`http://localhost:5000/api/tickets?user_id=${authUser?._id}`
+					`http://localhost:5000/api/transactions?user_id=${authUser?._id}`
 				);
-				if (!res.ok) throw new Error("failed to fetch user tickets !");
+				if (!res.ok) throw new Error("failed to fetch user transactions !");
 				const data = await res.json();
 				setLocalData(data);
 			} catch (error) {
@@ -27,8 +23,8 @@ export default function ShoppingCart() {
 				setLoading(false);
 			}
 		};
-		fetchUserTickets();
-	}, [refetch]);
+		fetchUserTransactions();
+	}, []);
 	if (loading) {
 		return (
 			<div className='w-full h-12 flex items-center justify-center'>
@@ -49,41 +45,38 @@ export default function ShoppingCart() {
 			}}
 			className=' w-[70%] mx-auto my-auto min-h-96 bg-zinc-800 rounded-2xl flex flex-col gap-10'>
 			<h1 className='text-3xl p-3 font-semibold text-zinc-300 border-b w-full'>
-				Shopping Cart
+				Transactions
 			</h1>
 			{localData?.length < 1 && (
 				<div className='w-full flex items-center justify-center text-2xl'>
-					Shopping Cart is Empty !!
+					No Transactions Yet !!
 				</div>
 			)}
-			<div className='flex flex-col gap-3 max-h-[50vh] overflow-auto w-full'>
+			<div className='flex flex-col gap-3 max-h-[50vh] overflow-auto w-full py-5'>
 				{localData?.length > 0 &&
 					localData?.map((item, ix) => (
-						<CartItem
+						<div
 							key={ix}
-							item={item}
-							setRefetch={setRefetch}
-						/>
+							className='w-full flex items-center justify-around'>
+							<div className='flex flex-col w-[80%] min-h-20 rounded-lg shadow-sm bg-zinc-700 p-3'>
+								<div>Transaction ID : {item?._id}</div>
+								<div>User ID : {item?.user_id}</div>
+								<div>Price : {item?.price}</div>
+								<div>
+									Time of creation :{" "}
+									{new Date(item?.createdAt).toLocaleDateString("en-US", {
+										hour: "2-digit",
+										minute: "2-digit",
+										day: "numeric",
+										month: "2-digit",
+										year: "numeric",
+										hour12: false,
+									})}
+								</div>
+							</div>
+						</div>
 					))}
 			</div>
-			{localData?.length > 0 && (
-				<div className='w-full h-20 flex items-center justify-end gap-5 pr-5'>
-					<div> Total : {localData?.length * 250} EGP</div>
-					<button
-						onClick={() => setShowCheckOutModal(true)}
-						className='h-16 w-32 bg-green-500 text-white font-semibold rounded-lg'>
-						Checkout!
-					</button>
-				</div>
-			)}
-			{showCheckOutModal && (
-				<Modal
-					setShowModal={setShowCheckOutModal}
-					condition={"checkout"}
-					refetch={refetch}
-					price={localData?.length * 250}
-				/>
-			)}
 		</motion.div>
 	);
 }

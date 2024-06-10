@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { toast } from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 export default function Modal({
 	setShowModal,
 	condition,
@@ -10,11 +11,13 @@ export default function Modal({
 	fullData,
 	setFullData,
 	fetchValue,
+	price,
 }) {
 	const { authUser } = useAuthContext();
 	const [loading, setLoading] = useState(false);
 	const [selectedSeats, setSelectedSeats] = useState([]);
 	const [movieOcupiedSeats, setMovieOccupiedSeats] = useState([]);
+	const navigate = useNavigate();
 	console.log({ selectedRecord });
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -94,6 +97,36 @@ export default function Modal({
 			} finally {
 				setLoading(false);
 				setShowModal(false);
+			}
+		}
+		if (condition === "checkout") {
+			try {
+				const res = await fetch("http://localhost:5000/api/transactions", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						user_id: authUser?._id,
+						price,
+					}),
+				});
+				if (!res.ok) throw new Error("failed to create transaction !");
+				toast.success("transaction created successfully !");
+				const res2 = await fetch(
+					`http://localhost:5000/api/tickets?user_id=${authUser?._id}`,
+					{
+						method: "DELETE",
+						headers: { "Content-Type": "application/json" },
+					}
+				);
+				if (!res2.ok) throw new Error("failed to delete tickets!");
+				setTimeout(() => {
+					navigate("/transactions");
+				}, 1000);
+				navigate;
+				setShowModal(false);
+			} catch (error) {
+				console.log(error);
+				toast.error(error.message);
 			}
 		}
 	};
@@ -327,28 +360,31 @@ export default function Modal({
 			<div
 				className={`flex z-[101] fixed inset-0 bg-gray-900/80 items-center justify-center overflow-hidden`}>
 				<form
-					onSubmit={(e) => e.preventDefault()}
+					onSubmit={handleSubmit}
 					className='min-w-[500px] min-h-56 bg-zinc-800 rounded-lg shadow-md flex flex-col p-10 gap-2 relative'>
 					<div
 						onClick={() => setShowModal(false)}
 						className='absolute top-5 right-5 h-5 w-5 rounded-lg bg-red-400 flex items-center justify-center text-white cursor-pointer hover:rotate-180 transition-all duration-200 text-xs'>
 						X
 					</div>
+					<h1 className='font-semibold text-xl mb-10'>{"Payment"}</h1>
 					<h1 className='font-semibold text-xl mb-10'>
-						{"Select Payment Method!"}
+						{"Are you sure you want to continue ?"}
 					</h1>
-					<div className='flex items-center justify-center h-full w-full gap-5 flex-col '>
+					<div className='flex items-center justify-center h-full w-full gap-5  '>
 						<button
 							type='submit'
 							className='flex items-center justify-center rounded-lg h-10 bg-green-400 text-white hover:scale-[101%] active:scale-[99%] px-2 w-fit min-w-32'>
 							{loading ? (
 								<span className='h-6 w-6 border-2 border-white rounded-full animate-spin border-l-transparent' />
 							) : (
-								"Cash on Delivery"
+								"Yes"
 							)}
 						</button>
-						<button className='flex items-center justify-center rounded-lg  h-10 bg-red-400 text-white hover:scale-[101%] active:scale-[99%] w-fit min-w-32'>
-							Bank Card!
+						<button
+							onClick={() => setShowModal(false)}
+							className='flex items-center justify-center rounded-lg  h-10 bg-red-400 text-white hover:scale-[101%] active:scale-[99%] w-fit min-w-32'>
+							No
 						</button>
 					</div>
 				</form>

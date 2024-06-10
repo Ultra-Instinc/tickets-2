@@ -1,5 +1,4 @@
-import Tickets from "../models/tickets.model.js";
-
+import Tickets from "./../models/tickets.model.js";
 export const getTickets = async (req, res) => {
 	try {
 		const { event_id } = req.query;
@@ -52,6 +51,16 @@ export const deleteTicket = async (req, res) => {
 		const { id } = req.params;
 		console.log({ id });
 		await Tickets.findByIdAndDelete(id);
+		res.status(200).json({ message: "deleted!" });
+	} catch (error) {
+		console.log("error in delete tickets controller :", error.message);
+		res.status(500).json({ error: "Internal server error !" });
+	}
+};
+export const deleteUserTickets = async (req, res) => {
+	try {
+		const { user_id } = req.query;
+		await Tickets.deleteMany({ user_id });
 		res.status(200).json({ message: "deleted!" });
 	} catch (error) {
 		console.log("error in delete tickets controller :", error.message);

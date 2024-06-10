@@ -3,6 +3,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import Logo from "./Logo";
 import UserIcon from "./UserIcon";
 import ShoppingCartIcon from "./ShoppingCartIcon";
+import Orders from "./Orders";
 
 export default function NavBar() {
 	const { authUser } = useAuthContext();
@@ -12,6 +13,7 @@ export default function NavBar() {
 				<div className='w-[90%] mx-auto flex px-5 justify-between min-h-10'>
 					<Logo />
 					<div className='flex items-center gap-10'>
+						<Orders />
 						<ShoppingCartIcon />
 						<UserIcon />
 					</div>
