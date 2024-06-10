@@ -31,6 +31,8 @@ export default function Modal({
 							release_date: selectedRecord?.release_date,
 							description: selectedRecord?.description,
 							logo: selectedRecord?.logo,
+							address: selectedRecord?.address,
+							showTime: selectedRecord?.showTime,
 						}),
 					}
 				);
@@ -125,9 +127,14 @@ export default function Modal({
 				className={`flex z-[101] fixed inset-0 bg-gray-900/80 items-center justify-center overflow-hidden`}>
 				<form
 					onSubmit={handleSubmit}
-					className='min-w-[500px] min-h-96 bg-zinc-800 rounded-lg shadow-md flex flex-col p-10 gap-8 '>
+					className='min-w-[500px]  min-h-96 bg-zinc-800 rounded-lg shadow-md flex flex-col p-10 gap-2 relative'>
+					<div
+						onClick={() => setShowModal(false)}
+						className='absolute top-5 right-5 h-5 w-5 rounded-lg bg-red-400 flex items-center justify-center text-white cursor-pointer hover:rotate-180 transition-all duration-200 text-xs'>
+						X
+					</div>
 					<h1>{condition === "create" ? "Insert Record!" : "Edit Record!"}</h1>
-					<div className='w-full'>
+					<div className='w-full '>
 						<label className='pl-2 text-zinc-400 font-semibold'>Title</label>
 						<input
 							type='text'
@@ -158,6 +165,38 @@ export default function Modal({
 						/>
 					</div>
 					<div className='w-full'>
+						<label className='pl-2 text-zinc-400 font-semibold'>
+							Show Time
+						</label>
+						<input
+							type='text'
+							placeholder='Show Time...'
+							className='w-full h-10 px-2'
+							value={selectedRecord?.showTime || ""}
+							onChange={(e) => {
+								setSelectedRecord((prev) => ({
+									...prev,
+									showTime: e.target.value,
+								}));
+							}}
+						/>
+					</div>
+					<div className='w-full'>
+						<label className='pl-2 text-zinc-400 font-semibold'>Address</label>
+						<input
+							type='text'
+							placeholder='Address...'
+							className='w-full h-10 px-2'
+							value={selectedRecord?.address || ""}
+							onChange={(e) => {
+								setSelectedRecord((prev) => ({
+									...prev,
+									address: e.target.value,
+								}));
+							}}
+						/>
+					</div>
+					<div className='w-full'>
 						<label className='pl-2 text-zinc-400 font-semibold'>Image</label>
 						<input
 							type='text'
@@ -180,7 +219,7 @@ export default function Modal({
 							name=''
 							id=''
 							cols='30'
-							rows='10'
+							rows='5'
 							className='w-full h-auto px-2'
 							value={selectedRecord?.description || ""}
 							onChange={(e) => {
@@ -216,7 +255,12 @@ export default function Modal({
 				className={`flex z-[101] fixed inset-0 bg-gray-900/80 items-center justify-center overflow-hidden`}>
 				<form
 					onSubmit={handleSubmit}
-					className='min-w-[500px]  bg-zinc-800 rounded-lg shadow-md flex flex-col p-10 gap-8'>
+					className='min-w-[500px] bg-zinc-800 rounded-lg shadow-md flex flex-col p-10 gap-2 relative'>
+					<div
+						onClick={() => setShowModal(false)}
+						className='absolute top-5 right-5 h-5 w-5 rounded-lg bg-red-400 flex items-center justify-center text-white cursor-pointer hover:rotate-180 transition-all duration-200 text-xs'>
+						X
+					</div>
 					<h1 className=''>{"Manage Order!"}</h1>
 					<p>{"Select Your seat(s) below"}</p>
 					<div className='grid grid-cols-12 max-h-[450px] overflow-auto'>
@@ -272,6 +316,39 @@ export default function Modal({
 							onClick={() => setShowModal(false)}
 							className='flex items-center justify-center rounded-lg w-20 h-10 bg-red-400 text-white hover:scale-[101%] active:scale-[99%]'>
 							Close
+						</button>
+					</div>
+				</form>
+			</div>,
+			document.querySelector(".modal_container")
+		);
+	} else if (condition === "checkout") {
+		return ReactDOM.createPortal(
+			<div
+				className={`flex z-[101] fixed inset-0 bg-gray-900/80 items-center justify-center overflow-hidden`}>
+				<form
+					onSubmit={(e) => e.preventDefault()}
+					className='min-w-[500px] min-h-56 bg-zinc-800 rounded-lg shadow-md flex flex-col p-10 gap-2 relative'>
+					<div
+						onClick={() => setShowModal(false)}
+						className='absolute top-5 right-5 h-5 w-5 rounded-lg bg-red-400 flex items-center justify-center text-white cursor-pointer hover:rotate-180 transition-all duration-200 text-xs'>
+						X
+					</div>
+					<h1 className='font-semibold text-xl mb-10'>
+						{"Select Payment Method!"}
+					</h1>
+					<div className='flex items-center justify-center h-full w-full gap-5 flex-col '>
+						<button
+							type='submit'
+							className='flex items-center justify-center rounded-lg h-10 bg-green-400 text-white hover:scale-[101%] active:scale-[99%] px-2 w-fit min-w-32'>
+							{loading ? (
+								<span className='h-6 w-6 border-2 border-white rounded-full animate-spin border-l-transparent' />
+							) : (
+								"Cash on Delivery"
+							)}
+						</button>
+						<button className='flex items-center justify-center rounded-lg  h-10 bg-red-400 text-white hover:scale-[101%] active:scale-[99%] w-fit min-w-32'>
+							Bank Card!
 						</button>
 					</div>
 				</form>

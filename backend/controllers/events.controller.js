@@ -23,14 +23,16 @@ export const getSingleEvent = async (req, res) => {
 };
 export const addEvent = async (req, res) => {
 	try {
-		const { name, release_date, description, logo, type, show_date } = req.body;
+		const { name, release_date, description, logo, type, showTime, address } =
+			req.body;
 		let event = await Events.create({
 			name,
 			release_date,
 			logo,
 			type,
 			description,
-			show_date,
+			showTime,
+			address,
 		});
 		res.status(200).json(event);
 	} catch (error) {

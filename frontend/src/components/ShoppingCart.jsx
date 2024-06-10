@@ -3,13 +3,14 @@ import { motion } from "framer-motion";
 import { useAuthContext } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
 import CartItem from "./CartItem";
+import Modal from "./Modal";
 
 export default function ShoppingCart() {
 	const [localData, setLocalData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [refetch, setRefetch] = useState(false);
 	const { authUser } = useAuthContext();
-
+	const [showCheckOutModal, setShowCheckOutModal] = useState(false);
 	useEffect(() => {
 		const fetchUserTickets = async () => {
 			try {
@@ -68,10 +69,18 @@ export default function ShoppingCart() {
 			{localData?.length > 0 && (
 				<div className='w-full h-20 flex items-center justify-end gap-5 pr-5'>
 					<div> Total : {localData?.length * 250} EGP</div>
-					<button className='h-16 w-32 bg-green-500 text-white font-semibold rounded-lg'>
+					<button
+						onClick={() => setShowCheckOutModal(true)}
+						className='h-16 w-32 bg-green-500 text-white font-semibold rounded-lg'>
 						Checkout!
 					</button>
 				</div>
+			)}
+			{showCheckOutModal && (
+				<Modal
+					setShowModal={setShowCheckOutModal}
+					condition={"checkout"}
+				/>
 			)}
 		</motion.div>
 	);

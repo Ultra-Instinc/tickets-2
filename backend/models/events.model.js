@@ -23,6 +23,14 @@ const eventsSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		showTime: {
+			type: String,
+			required: true,
+		},
+		address: {
+			type: String,
+			required: true,
+		},
 	},
 	{ timestamps: true }
 );

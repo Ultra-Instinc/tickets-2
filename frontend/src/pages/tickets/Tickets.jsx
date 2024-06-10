@@ -36,6 +36,8 @@ export default function Tickets() {
 			name: "",
 			description: "",
 			release_date: "",
+			address: "",
+			showTime: "",
 			logo: "",
 			type:
 				ticketsType === "Theater"
@@ -126,7 +128,7 @@ export default function Tickets() {
 					localData?.map((item, ix) => (
 						<div
 							key={ix}
-							className='w-[90%] h-32 hover:h-64 flex rounded-xl group overflow-hidden cursor-pointer hover:opacity-95 transition-all duration-500 relative my-2'>
+							className='w-[90%] h-48 hover:h-72 flex rounded-xl group overflow-hidden cursor-pointer hover:opacity-95 transition-all duration-500 relative my-2'>
 							{authUser?.username === "admin" && (
 								<>
 									<span
@@ -155,6 +157,12 @@ export default function Tickets() {
 								<div className='flex-1 flex items-start justify-center mx-5 flex-col '>
 									<p className='font-semibold text-[2rem]'>{item?.name} </p>
 									<p className='font-normal'>Released : {item?.release_date}</p>
+									<p className='font-normal hidder group-hover:inline-block'>
+										Show Time : {item?.showTime}
+									</p>
+									<p className='font-normal hidder group-hover:inline-block'>
+										address : {item?.address}
+									</p>
 									<p className='font-normal line-clamp-2 group-hover:line-clamp-none transition-all duration-300 delay-200 '>
 										Description : {item?.description}
 									</p>
@@ -170,7 +178,6 @@ export default function Tickets() {
 						</div>
 					))}
 			</div>
-
 			{localData?.length < 1 && (
 				<div className='w-full flex items-center justify-center text-4xl text-red-400 '>
 					No records Were Found !
@@ -186,6 +193,7 @@ export default function Tickets() {
 					setFullData={setLocalData}
 				/>
 			)}
+
 			{orderModal && (
 				<Modal
 					setShowModal={setShowOrderModal}

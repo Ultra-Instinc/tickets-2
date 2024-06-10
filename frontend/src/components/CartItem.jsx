@@ -82,6 +82,14 @@ export default function CartItem({ item, setRefetch }) {
 						<span>Number: </span>
 						<span className='font-semibold text-lg px-5'>{item?.number}</span>
 					</div>
+					<div className='flex items-center'>
+						<span>Show Time: </span>
+						<span className='font-semibold text-lg px-5'>{item?.showTime}</span>
+					</div>
+					<div className='flex items-center'>
+						<span>Address: </span>
+						<span className='font-semibold text-lg px-5'>{item?.address}</span>
+					</div>
 				</div>
 				<div className='flex items-center justify-end w-full pr-10 font-semibold text-xl'>
 					<div>Price: 250 EGP</div>
